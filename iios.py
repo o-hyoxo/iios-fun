@@ -1,4 +1,5 @@
-from cloakbrowser import launchimport argparse
+from cloakbrowser import launch
+import argparse
 
 parser = argparse.ArgumentParser(description='Parse user data')
 parser.add_argument("--email", help="Login Email", default="mr.wangpf@gmail.com")
