@@ -1,5 +1,9 @@
 name: iios
 on:
+schedule:
+    # 每天 UTC 时间 0:00 运行（对应北京时间早上 8:00）
+    # 你可以根据需要修改 cron 表达式，格式为: 分 时 日 月 星期
+    - cron: '13 11 * * *'
   repository_dispatch:
   workflow_dispatch:
     inputs:
