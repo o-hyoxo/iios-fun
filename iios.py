@@ -1,8 +1,8 @@
 from cloakbrowser import launchimport argparse
 
 parser = argparse.ArgumentParser(description='Parse user data')
-parser.add_argument("--email", help="Login Email", default="")
-parser.add_argument("--password", help="Login Password", default="")
+parser.add_argument("--email", help="Login Email", default="mr.wangpf@gmail.com")
+parser.add_argument("--password", help="Login Password", default="wasd2048")
 args = parser.parse_args()
 
 if args.email:
