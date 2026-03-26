@@ -1,9 +1,5 @@
 name: iios
 on:
-schedule:
-    # 每天 UTC 时间 0:00 运行（对应北京时间早上 8:00）
-    # 你可以根据需要修改 cron 表达式，格式为: 分 时 日 月 星期
-    - cron: '18 10 * * *'
   repository_dispatch:
   workflow_dispatch:
     inputs:
@@ -11,6 +7,9 @@ schedule:
         description: 'Headless'
         required: false
         default: 'false'
+  # 增加定时任务（每天运行一次）
+  schedule:
+    - cron: '10 18 * * *' # 这里使用的是 UTC 时间的 0点，换算成北京时间是每天早上 8点
 
 env:
   HEADLESS: false
@@ -18,7 +17,8 @@ env:
 jobs:
   build:
     runs-on: macos-latest
-    if: github.event.repository.owner.id == github.event.sender.id
+    # 放行自动触发的定时任务 (github.event_name == 'schedule')
+    if: github.event.repository.owner.id == github.event.sender.id || github.event_name == 'schedule'
     steps:
       - uses: actions/checkout@v2
         with:
