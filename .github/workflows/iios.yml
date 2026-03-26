@@ -1,0 +1,41 @@
+name: iios
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      Url:
+        description: 'Headless'
+        required: false
+        default: 'false'
+
+env:
+  HEADLESS: false
+  
+jobs:
+  build:
+    runs-on: macos-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: true # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          fetch-depth: 0 
+
+      - uses: browser-actions/setup-chrome@v2
+        with:
+          install-chromedriver: true
+
+      - name: Check depends
+        run: |
+            python -V
+            
+      - name: Install prerequisites
+        run: |
+          python -m pip install --upgrade pip wheel
+          pip install cloakbrowser
+          python -m cloakbrowser install
+          python -m cloakbrowser info   
+
+      - name: Run code
+        run: |
+            python iios.py
